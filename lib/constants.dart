@@ -30,23 +30,22 @@ const kHalfWidthSizedBox = SizedBox(
   width: kDefaultPadding / 2,
 );
 
+DeviceType deviceType = SizerUtil.deviceType;
+
 final kTopBorderRadius = BorderRadius.only(
-  topLeft: Radius.circular(SizerUtil.deviceType == DeviceType.tablet ? 40 : 20),
-  topRight:
-      Radius.circular(SizerUtil.deviceType == DeviceType.tablet ? 40 : 20),
+  topLeft: Radius.circular(deviceType == DeviceType.tablet ? 40 : 20),
+  topRight: Radius.circular(deviceType == DeviceType.tablet ? 40 : 20),
 );
 
 final kBottomBorderRadius = BorderRadius.only(
-  bottomRight: Radius.circular(SizerUtil.deviceType == DeviceType.tablet ? 40 : 20),
+  bottomRight:
+      Radius.circular(SizerUtil.deviceType == DeviceType.tablet ? 40 : 20),
   bottomLeft:
-  Radius.circular(SizerUtil.deviceType == DeviceType.tablet ? 40 : 20),
+      Radius.circular(SizerUtil.deviceType == DeviceType.tablet ? 40 : 20),
 );
 
 final kInputTextStyle = GoogleFonts.poppins(
-  color: kTextBlackColor,
-  fontSize: 11.sp,
-  fontWeight: FontWeight.w500
-);
+    color: kTextBlackColor, fontSize: 11.sp, fontWeight: FontWeight.w500);
 
 //validation for mobile
 const String mobilePattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';

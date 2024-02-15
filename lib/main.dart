@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/routes.dart';
+import 'package:flutter_application_14/screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,27 +16,79 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      //to support arabic language
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        // Locale('en'), // English
+        Locale('ar'), // arabic
+      ],
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: kPrimaryColor,
+          primaryColor: kPrimaryColor,
+          appBarTheme: AppBarTheme(
+            color: kPrimaryColor,
+            elevation: 0,
+          ),
+          textTheme: GoogleFonts.sourceSans3TextTheme(
+            Theme.of(context).textTheme.apply().copyWith(
+                  bodyLarge: const TextStyle(
+                      color: kTextWhiteColor,
+                      fontSize: 35.0,
+                      fontWeight: FontWeight.bold),
+                  titleMedium: const TextStyle(
+                      color: kTextWhiteColor,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w300),
+                ),
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            labelStyle:
+                TextStyle(fontSize: 15, color: kTextLightColor, height: 0.5),
+            hintStyle:
+                TextStyle(fontSize: 16, color: kTextBlackColor, height: 0.5),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kTextLightColor,
+                width: 0.7,
+              ),
+            ),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kTextLightColor,
+              ),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kTextLightColor,
+              ),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kPrimaryColor,
+                width: 0.7,
+              ),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kErrorBorderColor,
+                width: 1.2,
+              ),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: kErrorBorderColor,
+                width: 1.2,
+              ),
+            ),
+          )),
+      initialRoute: SplashScreen.routeName,
+      routes: routs,
     );
   }
 }
