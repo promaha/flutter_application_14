@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
-import 'package:flutter_application_14/screens/home_screen/widgets/student_data.dart';
+import 'package:flutter_application_14/screens/contact_screen/contact_screen.dart';
 
 class MyProfileScreen extends StatelessWidget {
   const MyProfileScreen({super.key});
@@ -9,29 +9,32 @@ class MyProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "الملف الشخصي",
           style: TextStyle(color: kTextWhiteColor),
         ),
-        // actions: [
-        //   InkWell(
-        //     onTap: () {},
-        //     child: Container(
-        //       child: Padding(
-        //         padding: const EdgeInsets.only(right: kDefaultPadding / 2),
-        //         // child: Row(
-        //         //   children: [
-        //         //     Icon(Icons.report_gmailerrorred_outlined),
-        //         //     kHalfSizedBox,
-        //         //     Text(
-        //         //       "Report",
-        //         //       style: Theme.of(context).textTheme.titleMedium,
-        //         //     )
-        //         //   ],
-        //       ),
-        //     ),
-        //   ),
-        // ],
+        actions: [
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, ContactScreen.routeName);
+            },
+            child: Container(
+              margin: const EdgeInsets.only(left: 20.0),
+              padding: const EdgeInsets.only(right: kDefaultPadding / 2),
+              child: const Row(
+                // mainAxisAlignment: MainAxisAlignment.end,
+                // crossAxisAlignment: CrossAxisAlignment.end,
+
+                children: [
+                  Icon(
+                    Icons.phone,
+                    color: kOtherColor,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         color: kOtherColor,
@@ -42,7 +45,7 @@ class MyProfileScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 150,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: kPrimaryColor,
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(kDefaultPadding * 2),
@@ -50,9 +53,9 @@ class MyProfileScreen extends StatelessWidget {
                 ),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     maxRadius: 50.0,
                     minRadius: 50.0,
                     backgroundColor: kSecondaryColor,
@@ -66,9 +69,10 @@ class MyProfileScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium),
                       Text(
                         "المستوى الاول",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              fontSize: 14.0,
-                            ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(fontSize: 14.0, color: kTextWhiteColor),
                       ),
                     ],
                   ),
@@ -79,18 +83,22 @@ class MyProfileScreen extends StatelessWidget {
             ProfileDetailColumn(
               title: "الاسم",
               value: "مها",
+              iconProfile: Icons.person_2_outlined,
             ),
             ProfileDetailColumn(
               title: "العمر",
               value: "22",
+              iconProfile: Icons.calendar_today_outlined,
             ),
             ProfileDetailColumn(
               title: "الايميل",
               value: "maha12@gmail.com",
+              iconProfile: Icons.email_outlined,
             ),
             ProfileDetailColumn(
               title: "الهدف من الدراسة",
               value: "التعلم",
+              iconProfile: Icons.school_outlined,
             ),
           ],
         ),
@@ -101,9 +109,13 @@ class MyProfileScreen extends StatelessWidget {
 
 class ProfileDetailColumn extends StatelessWidget {
   const ProfileDetailColumn(
-      {super.key, required this.title, required this.value});
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.iconProfile});
   final String title;
   final String value;
+  final IconData iconProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +130,7 @@ class ProfileDetailColumn extends StatelessWidget {
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: kTextLightColor,
+                      color: kTextBlackColor,
                       fontSize: 15.0,
                     ),
               ),
@@ -126,7 +138,7 @@ class ProfileDetailColumn extends StatelessWidget {
               Text(
                 value,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: kTextLightColor,
+                      color: kTextBlackColor,
                       fontSize: 15.0,
                       fontWeight: FontWeight.w600,
                     ),
@@ -141,7 +153,7 @@ class ProfileDetailColumn extends StatelessWidget {
             ],
           ),
           Icon(
-            Icons.email_outlined,
+            iconProfile,
             size: 20.0,
           )
         ],

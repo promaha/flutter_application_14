@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/screens/Lessons_screen/lesson_screen.dart';
+import 'package:flutter_application_14/screens/befor_start_screen/befor_start_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/widgets/student_data.dart';
 import 'package:flutter_application_14/screens/my_profile/my_profile.dart';
 import 'package:flutter_application_14/screens/result_screen/result_screen.dart';
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StudentName(studentName: 'مها'),
@@ -61,200 +61,59 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 child: ListView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: [
                     Column(
                       children: [
                         LevelsCard(
-                            onPress: () {},
+                            onPress: () {
+                              Navigator.pushNamed(
+                                  context, BeforStartScreen.routeName);
+                            },
+                            icon: "assets/icons/ask.svg",
+                            title: "قبل البدء بالدراسة"),
+                        LevelsCard(
+                            onPress: () {
+                              Navigator.pushNamed(
+                                  context, LessonScreen.routeName);
+                            },
                             icon: "assets/icons/ask.svg",
                             title: "المستوى الاول"),
                         LevelsCard(
                             onPress: () {},
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى الثاني"),
                         LevelsCard(
                             onPress: () {},
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى الثالث"),
                         LevelsCard(
                             onPress: () {},
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى الرابع"),
                         LevelsCard(
                             onPress: () {},
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى الخامس"),
                         LevelsCard(
                             onPress: () {},
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى السادس"),
                         LevelsCard(
                             onPress: () {},
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى السابع"),
                         LevelsCard(
                             onPress: () {
                               Navigator.pushNamed(
                                   context, ResultScreen.routeName);
                             },
                             icon: "assets/icons/ask.svg",
-                            title: "المستوى الاول"),
+                            title: "المستوى الثامن"),
                       ],
                     )
                   ],
                 ),
-
-                // child: SingleChildScrollView(
-                //   child: Column(
-                //     children: [
-                //       Container(
-                //         width: MediaQuery.of(context).size.width,
-                //         height: 100, //MediaQuery.of(context).size.height / 2.5,
-                //         // Rest of your code...
-                //         child: Container(
-                //           width: MediaQuery.of(context).size.width,
-                //           decoration: const BoxDecoration(
-                //             color: kOtherColor,
-                //             borderRadius: BorderRadius.only(
-                //               topLeft: Radius.circular(kDefaultPadding * 3),
-                //               topRight: Radius.circular(kDefaultPadding * 3),
-                //             ),
-                //           ),
-                //           child: TextButton(
-                //             onPressed: () {
-                //               // Rest of your code...
-                //             },
-                //             child: Padding(
-                //               padding: const EdgeInsets.all(10.0),
-                //               child: ClipRRect(
-                //                 borderRadius: BorderRadius.circular(10),
-                //                 child: Container(
-                //                   height: 100,
-                //                   width: 400,
-                //                   decoration: const BoxDecoration(
-                //                     image: DecorationImage(
-                //                       image: AssetImage('assets/images/1.png'),
-                //                       fit: BoxFit.cover,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //       Container(
-                //         width: MediaQuery.of(context).size.width,
-                //         height: 100, //MediaQuery.of(context).size.height / 2.5,
-                //         // Rest of your code...
-                //         child: Container(
-                //           width: MediaQuery.of(context).size.width,
-                //           decoration: const BoxDecoration(
-                //             color: kOtherColor,
-                //             borderRadius: BorderRadius.only(
-                //               topLeft: Radius.circular(kDefaultPadding * 3),
-                //               topRight: Radius.circular(kDefaultPadding * 3),
-                //             ),
-                //           ),
-                //           child: TextButton(
-                //             onPressed: () {
-                //               // Rest of your code...
-                //             },
-                //             child: Padding(
-                //               padding: const EdgeInsets.all(10.0),
-                //               child: ClipRRect(
-                //                 borderRadius: BorderRadius.circular(10),
-                //                 child: Container(
-                //                   height: 100,
-                //                   width: 400,
-                //                   decoration: const BoxDecoration(
-                //                     image: DecorationImage(
-                //                       image: AssetImage('assets/images/2.png'),
-                //                       fit: BoxFit.cover,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //       Container(
-                //         width: MediaQuery.of(context).size.width,
-                //         height: 100, //MediaQuery.of(context).size.height / 2.5,
-                //         // Rest of your code...
-                //         child: Container(
-                //           width: MediaQuery.of(context).size.width,
-                //           decoration: const BoxDecoration(
-                //             color: kOtherColor,
-                //             borderRadius: BorderRadius.only(
-                //               topLeft: Radius.circular(kDefaultPadding * 3),
-                //               topRight: Radius.circular(kDefaultPadding * 3),
-                //             ),
-                //           ),
-                //           child: TextButton(
-                //             onPressed: () {
-                //               // Rest of your code...
-                //             },
-                //             child: Padding(
-                //               padding: const EdgeInsets.all(10.0),
-                //               child: ClipRRect(
-                //                 borderRadius: BorderRadius.circular(10),
-                //                 child: Container(
-                //                   height: 100,
-                //                   width: 400,
-                //                   decoration: const BoxDecoration(
-                //                     image: DecorationImage(
-                //                       image: AssetImage('assets/images/3.png'),
-                //                       fit: BoxFit.cover,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //       Container(
-                //         width: MediaQuery.of(context).size.width,
-                //         height: 100, //MediaQuery.of(context).size.height / 2.5,
-                //         // Rest of your code...
-                //         child: Container(
-                //           width: MediaQuery.of(context).size.width,
-                //           decoration: const BoxDecoration(
-                //             color: kOtherColor,
-                //             borderRadius: BorderRadius.only(
-                //               topLeft: Radius.circular(kDefaultPadding * 3),
-                //               topRight: Radius.circular(kDefaultPadding * 3),
-                //             ),
-                //           ),
-                //           child: TextButton(
-                //             onPressed: () {
-                //               // Rest of your code...
-                //             },
-                //             child: Padding(
-                //               padding: const EdgeInsets.all(10.0),
-                //               child: ClipRRect(
-                //                 borderRadius: BorderRadius.circular(10),
-                //                 child: Container(
-                //                   height: 100,
-                //                   width: 400,
-                //                   decoration: const BoxDecoration(
-                //                     image: DecorationImage(
-                //                       image: AssetImage('assets/images/4.png'),
-                //                       fit: BoxFit.cover,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ),
             ),
           ),
