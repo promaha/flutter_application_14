@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
+import 'package:flutter_application_14/screens/onboard/onboard.dart';
 
 late bool _passwordVisible;
 
@@ -89,8 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             DefaultButton(
                               onPress: () {
                                 if (_foemKey.currentState!.validate()) {
-                                  Navigator.pushNamedAndRemoveUntil(context,
-                                      HomeScreen.routeName, (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      OnBoardScreen.routeName,
+                                      (route) => false);
                                 }
                               },
                               title: "تسجيل الدخول",

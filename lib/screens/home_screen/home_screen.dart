@@ -68,13 +68,6 @@ class HomeScreen extends StatelessWidget {
                         LevelsCard(
                             onPress: () {
                               Navigator.pushNamed(
-                                  context, BeforStartScreen.routeName);
-                            },
-                            icon: "assets/icons/ask.svg",
-                            title: "قبل البدء بالدراسة"),
-                        LevelsCard(
-                            onPress: () {
-                              Navigator.pushNamed(
                                   context, LessonScreen.routeName);
                             },
                             icon: "assets/icons/ask.svg",
