@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/screens/Lessons_screen/lesson_screen.dart';
-import 'package:flutter_application_14/screens/befor_start_screen/befor_start_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/widgets/student_data.dart';
-import 'package:flutter_application_14/screens/my_profile/my_profile.dart';
+import 'package:flutter_application_14/screens/myprofile_screen/my_profile.dart';
 import 'package:flutter_application_14/screens/result_screen/result_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

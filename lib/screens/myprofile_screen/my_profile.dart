@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/screens/contact_screen/contact_screen.dart';
+import 'package:flutter_application_14/screens/myprofile_screen/edit_profile.dart';
 
 class MyProfileScreen extends StatelessWidget {
   const MyProfileScreen({super.key});
@@ -35,6 +36,13 @@ class MyProfileScreen extends StatelessWidget {
             ),
           ),
         ],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: kOtherColor,
+          ),
+          onPressed: () {},
+        ),
       ),
       body: Container(
         color: kOtherColor,
@@ -101,6 +109,16 @@ class MyProfileScreen extends StatelessWidget {
               iconProfile: Icons.school_outlined,
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, EditProfileScreen.routeName);
+        },
+        backgroundColor: kPrimaryColor,
+        child: const Icon(
+          Icons.edit,
+          color: kOtherColor,
         ),
       ),
     );

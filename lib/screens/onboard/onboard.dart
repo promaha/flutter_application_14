@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/login_screen/login_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:flutter_application_14/screens/onboard/onboard_model.dart';
 
@@ -36,10 +37,12 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()));
               },
-              child: Text(
+              child: const Text(
                 "تخطي",
                 style: TextStyle(
                   color: kTextBlackColor,
@@ -107,7 +110,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                              builder: (context) => LoginScreen()));
                     }
                     _pageController.nextPage(
                         duration: Duration(microseconds: 300),

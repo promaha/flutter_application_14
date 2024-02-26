@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/screens/word_screen/word_screen.dart';
 import 'package:flutter_svg/svg.dart';
 // import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 // import 'package:flutter_application_1/cloths.dart';
@@ -73,7 +74,7 @@ class LessonScreen extends StatelessWidget {
                       title: "الاحرف"),
                   LessonsCard(
                       onPress: () {
-                        Navigator.pushNamed(context, routeName);
+                        Navigator.pushNamed(context, WordsScreen.routeName);
                       },
                       icon: "assets/icons/ask.svg",
                       title: " الارقام"),

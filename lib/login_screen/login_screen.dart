@@ -90,10 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             DefaultButton(
                               onPress: () {
                                 if (_foemKey.currentState!.validate()) {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      OnBoardScreen.routeName,
-                                      (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      HomeScreen.routeName, (route) => false);
                                 }
                               },
                               title: "تسجيل الدخول",

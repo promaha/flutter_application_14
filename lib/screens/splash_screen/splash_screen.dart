@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
+import 'package:flutter_application_14/screens/onboard/onboard.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,7 +13,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushNamedAndRemoveUntil(
-          context, LoginScreen.routeName, (route) => false);
+          context, OnBoardScreen.routeName, (route) => false);
     });
     return Scaffold(
       body: Row(

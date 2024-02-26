@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_14/screens/onboard/onboard.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_14/constants.dart';
@@ -87,7 +88,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           )),
-      initialRoute: SplashScreen.routeName,
+      initialRoute: OnBoardScreen.routeName,
       routes: routs,
     );
   }
