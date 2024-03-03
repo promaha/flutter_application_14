@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514940852779",
+    "project_id": "eshara20241",
+    "storage_bucket": "eshara20241.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514940852779:android:2e3134b8146041254f686e",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_14"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvH5UCrnWceI-DrnAaZdPmy8PKkrpfX0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

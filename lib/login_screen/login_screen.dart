@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
-import 'package:flutter_application_14/screens/onboard/onboard.dart';
 
 late bool _passwordVisible;
 
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         body: ListView(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 2.8,
               // color: kOtherColor,

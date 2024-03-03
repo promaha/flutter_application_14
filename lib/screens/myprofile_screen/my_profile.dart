@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/screens/contact_screen/contact_screen.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/edit_profile.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class MyProfileScreen extends StatelessWidget {
   const MyProfileScreen({super.key});
@@ -108,6 +109,24 @@ class MyProfileScreen extends StatelessWidget {
               value: "التعلم",
               iconProfile: Icons.school_outlined,
             ),
+            // Barcodewidget(
+            //   Widget: MediaQuery.of(context).size.width / 2,
+            //   height: MediaQuery.of(context).size.height / 2,
+            //   data: 'كود التطبيق',
+            //   barcode: Barcode.qrcode(),
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: BarcodeWidget(
+                  width: 120, // MediaQuery.of(context).size.width / 2,
+                  height: 120, //MediaQuery.of(context).size.height / 2,
+                  color: kPrimaryColor,
+                  data: 'كود التطبيق',
+                  barcode: Barcode.qrCode(),
+                ),
+              ),
+            )
           ],
         ),
       ),
