@@ -62,7 +62,7 @@ class StudentYear extends StatelessWidget {
       child: Center(
         child: Text(
           studentYear,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12.0,
             color: kTextBlackColor,
             fontWeight: FontWeight.w200,

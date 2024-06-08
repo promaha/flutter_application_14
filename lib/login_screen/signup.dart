@@ -1,22 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
-import 'package:flutter_application_14/login_screen/signup.dart';
+import 'package:flutter_application_14/login_screen/login_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 late bool _passwordVisible;
 
-class LoginScreen extends StatefulWidget {
-  static String routeName = 'LoginScreen';
+class SignupScreen extends StatefulWidget {
+  static String routeName = 'SignupScreen';
 
-  const LoginScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _foemKey = GlobalKey<FormState>();
 
   @override
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("صفحة تسجيل الدخول",
+                      Text("صفحة انشاء حساب",
                           style: TextStyle(
                             fontSize: 25,
                             color: kTextWhiteColor,
@@ -84,80 +85,87 @@ class _LoginScreenState extends State<LoginScreen> {
                           sizedBox,
                           BuildPasswordField(),
                           sizedBox,
+                          BuildConformPasswordField(),
+                          sizedBox,
                           DefaultButton(
-                            onPress: () {
+                            onPress: () async {
                               if (_foemKey.currentState!.validate()) {
                                 Navigator.pushNamedAndRemoveUntil(context,
                                     HomeScreen.routeName, (route) => false);
                               }
+
+                              //   try {
+                              //     final credential = await FirebaseAuth.instance
+                              //         .createUserWithEmailAndPassword(
+                              //       email: emailAddress,
+                              //       password: password,
+                              //     );
+                              //   } on FirebaseAuthException catch (e) {
+                              //     if (e.code == 'weak-password') {
+                              //       print('The password provided is too weak.');
+                              //     } else if (e.code == 'email-already-in-use') {
+                              //       print(
+                              //           'The account already exists for that email.');
+                              //     }
+                              //   } catch (e) {
+                              //     print(e);
+                              //   }
                             },
-                            title: "تسجيل الدخول",
+                            title: " إنشاء حساب",
                             iconData: Icons.arrow_forward_ios_outlined,
                           ),
                           sizedBox,
-                          const Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Text(
-                              "نسيت كلمة المرور؟",
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  color: kPrimaryColor, fontSize: 15.0),
-                            ),
-                          ),
-                          sizedBox,
-                          Row(
+                        ],
+                      ),
+                    ),
+                    sizedBox,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 320,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              SizedBox(
-                                width: 320,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    _buildSocialMediaBtn(
-                                      color: const Color.fromARGB(
-                                          255, 59, 89, 152),
-                                      icon: FontAwesomeIcons.facebook,
-                                    ),
-                                    _buildSocialMediaBtn(
-                                      color: const Color.fromARGB(
-                                          255, 219, 68, 55),
-                                      icon: FontAwesomeIcons.google,
-                                    ),
-                                  ],
-                                ),
+                              _buildSocialMediaBtn(
+                                color: const Color.fromARGB(255, 59, 89, 152),
+                                icon: FontAwesomeIcons.facebook,
+                              ),
+                              _buildSocialMediaBtn(
+                                color: const Color.fromARGB(255, 219, 68, 55),
+                                icon: FontAwesomeIcons.google,
                               ),
                             ],
                           ),
-                          sizedBox,
-                          Align(
-                            alignment: Alignment.center,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushReplacementNamed(
-                                    context, SignupScreen.routeName);
-                              },
-                              child: const Text.rich(
-                                TextSpan(children: [
-                                  TextSpan(
-                                    text: "ليس لديك حساب؟   ",
-                                    style: TextStyle(
-                                        color: kTextBlackColor,
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  TextSpan(
-                                    text: "انشاء حساب",
-                                    style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 15.0,
-                                    ),
-                                  )
-                                ]),
-                                textAlign: TextAlign.end,
-                              ),
+                        ),
+                      ],
+                    ),
+                    sizedBox,
+                    Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                              context, LoginScreen.routeName);
+                        },
+                        child: const Text.rich(
+                          TextSpan(children: [
+                            TextSpan(
+                              text: "لديك حساب؟   ",
+                              style: TextStyle(
+                                  color: kTextBlackColor,
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
+                            TextSpan(
+                              text: "تسجيل الدخول",
+                              style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 15.0,
+                              ),
+                            )
+                          ]),
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                     ),
                   ],
@@ -183,6 +191,38 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       decoration: InputDecoration(
         labelText: "كلمة المرور",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        isDense: true,
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              _passwordVisible = !_passwordVisible;
+            });
+          },
+          icon: Icon(_passwordVisible
+              ? Icons.visibility_off_outlined
+              : Icons.visibility_off_outlined),
+        ),
+      ),
+      validator: (value) {
+        if (value!.length < 5) return "يجب ان تكون اكثر من 5 رموز";
+        return null;
+      },
+    );
+  }
+
+  TextFormField BuildConformPasswordField() {
+    return TextFormField(
+      obscureText: _passwordVisible,
+      textAlign: TextAlign.start,
+      keyboardType: TextInputType.visiblePassword,
+      style: const TextStyle(
+        color: kTextBlackColor,
+        fontSize: 17.0,
+        fontWeight: FontWeight.w300,
+      ),
+      decoration: InputDecoration(
+        labelText: " تأكيد كلمة المرور",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         isDense: true,
         suffixIcon: IconButton(

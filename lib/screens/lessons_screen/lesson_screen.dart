@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_14/constants.dart';
-import 'package:flutter_application_14/screens/word_screen/word_screen.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_application_14/components/custom_card.dart';
+import 'package:flutter_application_14/screens/pageslessons_screen.dart/pageslessons_screen.dart';
+import 'package:get/get.dart';
+
 // import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 // import 'package:flutter_application_1/cloths.dart';
 // import 'package:flutter_application_1/colors.dart';
@@ -74,22 +75,25 @@ class LessonScreen extends StatelessWidget {
                       title: "الاحرف"),
                   LessonsCard(
                       onPress: () {
-                        Navigator.pushNamed(context, WordsScreen.routeName);
+                        Get.toNamed(PagesLessonsScreen.routeName);
                       },
                       icon: "assets/icons/ask.svg",
                       title: " الارقام"),
+                  //
                   LessonsCard(
                       onPress: () {
                         Navigator.pushNamed(context, routeName);
                       },
                       icon: "assets/icons/ask.svg",
                       title: " الاسرة"),
+                  //
                   LessonsCard(
                       onPress: () {
                         Navigator.pushNamed(context, routeName);
                       },
                       icon: "assets/icons/ask.svg",
                       title: "المستوى الاول"),
+                  //
                   LessonsCard(
                       onPress: () {
                         Navigator.pushNamed(context, routeName);
@@ -108,53 +112,6 @@ class LessonScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20),
         ],
-      ),
-    );
-  }
-}
-
-class LessonsCard extends StatelessWidget {
-  const LessonsCard(
-      {super.key,
-      required this.onPress,
-      required this.icon,
-      required this.title});
-  final VoidCallback onPress;
-  final String icon;
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPress,
-      child: Container(
-        padding: const EdgeInsets.all(0),
-        decoration: BoxDecoration(
-            color: kPrimaryColor,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  offset: const Offset(0, 5),
-                  color: Theme.of(context).primaryColor.withOpacity(.2),
-                  spreadRadius: 2,
-                  blurRadius: 5)
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              icon,
-              height: 40.0,
-              width: 40.0,
-              color: kOtherColor,
-            ),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20.0, color: kTextWhiteColor),
-            ),
-          ],
-        ),
       ),
     );
   }

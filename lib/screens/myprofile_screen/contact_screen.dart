@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_14/constants.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
@@ -12,7 +11,7 @@ class ContactScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'مؤسسة الصم والبكم',
               style: TextStyle(
                 fontFamily: 'Cairo',
@@ -37,13 +36,13 @@ class ContactScreen extends StatelessWidget {
               ),
             ),
             Card(
-              margin: EdgeInsets.all(10.0),
+              margin: const EdgeInsets.all(10.0),
               child: ListTile(
                 leading: Icon(
                   Icons.phone,
                   color: Colors.cyan[700],
                 ),
-                title: Text(
+                title: const Text(
                   '+43 234 567 89',
                   style: TextStyle(
                     color: Colors.black87,
@@ -53,13 +52,13 @@ class ContactScreen extends StatelessWidget {
               ),
             ),
             Card(
-              margin: EdgeInsets.all(10.0),
+              margin: const EdgeInsets.all(10.0),
               child: ListTile(
                 leading: Icon(
                   Icons.email,
                   color: Colors.cyan[700],
                 ),
-                title: Text(
+                title: const Text(
                   'a123@email.com',
                   style: TextStyle(
                     fontSize: 20.0,

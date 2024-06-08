@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
-import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:flutter_application_14/screens/onboard/onboard_model.dart';
 
 class OnBoardScreen extends StatefulWidget {
@@ -28,6 +27,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kOtherColor,
@@ -37,10 +37,11 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.pushReplacementNamed(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
+                    // MaterialPageRoute(
+                    //     builder: (context) => const LoginScreen())
+                    LoginScreen.routeName);
               },
               child: const Text(
                 "تخطي",
@@ -55,7 +56,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
         child: PageView.builder(
           itemCount: screens.length,
           controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (int index) {
             setState(() {
               _currentIndex = index;
@@ -94,7 +95,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 Text(
                   screens[index].text,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 27.0,
                       fontWeight: FontWeight.bold,
                       color: kTextBlackColor),
@@ -102,23 +103,24 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 Text(
                   screens[index].desc,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14.0),
+                  style: const TextStyle(fontSize: 14.0),
                 ),
                 InkWell(
                   onTap: () {
                     if (index == screens.length - 1) {
-                      Navigator.pushReplacement(
+                      Navigator.pushReplacementNamed(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
+                          // MaterialPageRoute(
+                          //     builder: (context) => const LoginScreen())
+                          LoginScreen.routeName);
                     }
                     _pageController.nextPage(
-                        duration: Duration(microseconds: 300),
+                        duration: const Duration(microseconds: 300),
                         curve: Curves.bounceIn);
                   },
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 10.0),
                     decoration: BoxDecoration(
                       color: kPrimaryColor,
                       borderRadius: BorderRadius.circular(15.0),

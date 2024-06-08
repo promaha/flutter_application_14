@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
-import 'package:flutter_application_14/screens/contact_screen/contact_screen.dart';
+import 'package:flutter_application_14/controller/profile_controller.dart';
+import 'package:flutter_application_14/screens/myprofile_screen/contact_screen.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/edit_profile.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class MyProfileScreen extends StatelessWidget {
-  const MyProfileScreen({super.key});
   static String routeName = 'MyProfileScreen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +77,7 @@ class MyProfileScreen extends StatelessWidget {
                   kWidthSizedBox,
                   Column(
                     children: [
-                      Text("مها",
+                      Text("أهلا مها ",
                           style: Theme.of(context).textTheme.titleMedium),
                       Text(
                         "المستوى الاول",
@@ -89,26 +92,34 @@ class MyProfileScreen extends StatelessWidget {
               ),
             ),
             sizedBox,
-            ProfileDetailColumn(
-              title: "الاسم",
-              value: "مها",
-              iconProfile: Icons.person_2_outlined,
-            ),
-            ProfileDetailColumn(
-              title: "العمر",
-              value: "22",
-              iconProfile: Icons.calendar_today_outlined,
-            ),
-            ProfileDetailColumn(
-              title: "الايميل",
-              value: "maha12@gmail.com",
-              iconProfile: Icons.email_outlined,
-            ),
-            ProfileDetailColumn(
-              title: "الهدف من الدراسة",
-              value: "التعلم",
-              iconProfile: Icons.school_outlined,
-            ),
+            GetBuilder<ProfileController>(
+                init: ProfileController(),
+                builder: (controller) {
+                  return Column(
+                    children: [
+                      ProfileDetailColumn(
+                        title: "name",
+                        value: controller.pname.text,
+                        iconProfile: Icons.person_2_outlined,
+                      ),
+                      ProfileDetailColumn(
+                        title: "email",
+                        value: controller.pemail.text,
+                        iconProfile: Icons.person_2_outlined,
+                      ),
+                      ProfileDetailColumn(
+                        title: "password",
+                        value: controller.ppassword.text,
+                        iconProfile: Icons.person_2_outlined,
+                      ),
+                      ProfileDetailColumn(
+                        title: "goal of study",
+                        value: controller.pgoalOfStudy.text,
+                        iconProfile: Icons.person_2_outlined,
+                      ),
+                    ],
+                  );
+                }),
             // Barcodewidget(
             //   Widget: MediaQuery.of(context).size.width / 2,
             //   height: MediaQuery.of(context).size.height / 2,
@@ -139,61 +150,6 @@ class MyProfileScreen extends StatelessWidget {
           Icons.edit,
           color: kOtherColor,
         ),
-      ),
-    );
-  }
-}
-
-class ProfileDetailColumn extends StatelessWidget {
-  const ProfileDetailColumn(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.iconProfile});
-  final String title;
-  final String value;
-  final IconData iconProfile;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: kTextBlackColor,
-                      fontSize: 15.0,
-                    ),
-              ),
-              kHalfSizedBox,
-              Text(
-                value,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: kTextBlackColor,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              kHalfSizedBox,
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 1.1,
-                child: Divider(
-                  thickness: 1.0,
-                ),
-              )
-            ],
-          ),
-          Icon(
-            iconProfile,
-            size: 20.0,
-          )
-        ],
       ),
     );
   }

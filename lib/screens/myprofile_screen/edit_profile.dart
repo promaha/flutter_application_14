@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/controller/profile_controller.dart';
+import 'package:flutter_application_14/screens/myprofile_screen/my_profile.dart';
+import 'package:flutter_application_14/screens/myprofile_screen/profile_class_controller.dart';
+import 'package:get/get.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+class EditProfileScreen extends StatelessWidget {
+  EditProfileScreen({super.key});
   static String routeName = 'EditProfileScreen';
 
-  @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
-}
-
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  bool isObscurePassword = true;
+  final controller = Get.put(ProfileController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 200, //MediaQuery.of(context).size.height / 2.8,
-              padding: EdgeInsets.only(top: 45),
+              height: MediaQuery.of(context).size.height / 4.8,
+              padding: const EdgeInsets.only(top: 45),
               color: kPrimaryColor,
               child: Center(
                 child: Stack(
@@ -58,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                         ],
                         shape: BoxShape.circle,
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           fit: BoxFit.cover,
                           image:
                               AssetImage("assets/images/student_profile.jpeg"),
@@ -79,7 +78,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                           color: kPrimaryColor,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.edit,
                           color: kOtherColor,
                         ),
@@ -89,132 +88,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            BuildAgeAndGoal("اسم المستخدم"),
+            BuildName("اسم المستخدم", controller.ename),
             sizedBox,
-            buildTextFieldEmail(),
-            BuildPasswordField(),
+            buildTextFieldEmail(controller.eemail),
+            BuildPasswordField(controller.epassword),
             sizedBox,
-            BuildAgeAndGoal("الهدف من الدراسة"),
-            SizedBox(
+            BuildGoal("الهدف من الدراسة", controller.egoalOfStudy),
+            const SizedBox(
               height: 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SmallButton(onPress: () {}, title: "إلغاء"),
-                SmallButton(onPress: () {}, title: "حفظ")
+                GetBuilder<ProfileController>(
+                    //init: ProfileController(),
+                    builder: (controller) => SmallButton(
+                        onPress: () {
+                          controller.save();
+                          Get.offNamed(MyProfileScreen.routeName);
+                        },
+                        title: "حفظ")),
               ],
             )
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buildTextFieldEmail() {
-    return Padding(
-        padding: EdgeInsets.only(
-          bottom: 30,
-        ),
-        child: TextFormField(
-          textAlign: TextAlign.start,
-          keyboardType: TextInputType.emailAddress,
-          style: const TextStyle(
-            color: kTextBlackColor,
-            fontSize: 17.0,
-            fontWeight: FontWeight.w300,
-          ),
-          decoration: InputDecoration(
-            labelText: "الإيميل",
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            isDense: true,
-          ),
-          validator: (value) {
-            RegExp regExp = RegExp(emailPattern);
-            if (value == null || value.isEmpty) {
-              return "الرجاء ادخال المطلوب";
-            } else if (!regExp.hasMatch(value)) {
-              return "الرجاء ادخال ايميل بشكل صحيح";
-            }
-            return null;
-          },
-        )
-        //TextField(
-        // obscureText: isPasswordTextField ? isObscurePassword : false,
-        // decoration: InputDecoration(
-        //     suffixIcon: isPasswordTextField
-        //         ? IconButton(
-        //             onPressed: () {
-        //               setState(() {
-        //                 isObscurePassword = !isObscurePassword;
-        //               });
-        //             },
-        //             icon: const Icon(Icons.remove_red_eye),
-        //             color: kTextBlackColor,
-        //           )
-        //         : null,
-        //     contentPadding: EdgeInsets.only(bottom: 5),
-        //     labelText: labelText,
-        //     floatingLabelBehavior: FloatingLabelBehavior.always,
-        //     hintText: placeholder,
-        //     hintStyle: const TextStyle(
-        //       fontSize: 10,
-        //       fontWeight: FontWeight.bold,
-        //       color: Colors.grey,
-        //     )),
-        //     ),
-        );
-  }
-
-  TextFormField BuildPasswordField() {
-    return TextFormField(
-      obscureText: isObscurePassword,
-      textAlign: TextAlign.start,
-      keyboardType: TextInputType.visiblePassword,
-      style: const TextStyle(
-        color: kTextBlackColor,
-        fontSize: 17.0,
-        fontWeight: FontWeight.w300,
-      ),
-      decoration: InputDecoration(
-        labelText: "كلمة المرور",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        isDense: true,
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              isObscurePassword = !isObscurePassword;
-            });
-          },
-          icon: Icon(isObscurePassword
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_off_outlined),
-        ),
-      ),
-      validator: (value) {
-        if (value!.length < 5) return "يجب ان تكون اكثر من 5 رموز";
-        return null;
-      },
-    );
-  }
-
-  TextFormField BuildAgeAndGoal(String title) {
-    return TextFormField(
-      obscureText: isObscurePassword,
-      textAlign: TextAlign.start,
-      keyboardType: TextInputType.visiblePassword,
-      style: const TextStyle(
-        color: kTextBlackColor,
-        fontSize: 17.0,
-        fontWeight: FontWeight.w300,
-      ),
-      decoration: InputDecoration(
-        labelText: title,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        isDense: true,
       ),
     );
   }

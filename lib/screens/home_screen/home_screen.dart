@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 3.5,
             child: Column(
@@ -129,7 +129,7 @@ class LevelsCard extends StatelessWidget {
     return InkWell(
       onTap: onPress,
       child: Container(
-        margin: EdgeInsets.only(top: kDefaultPadding),
+        margin: const EdgeInsets.only(top: kDefaultPadding),
         width: MediaQuery.of(context).size.width / 1.1,
         height: MediaQuery.of(context).size.height / 7,
         decoration: BoxDecoration(
@@ -148,7 +148,7 @@ class LevelsCard extends StatelessWidget {
               title,
               textAlign: TextAlign.start,
               // style: Theme.of(context).textTheme.titleSmall,
-              style: TextStyle(fontSize: 20.0, color: kTextWhiteColor),
+              style: const TextStyle(fontSize: 20.0, color: kTextWhiteColor),
             )
           ],
         ),

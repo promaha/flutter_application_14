@@ -44,6 +44,8 @@ dependencies:
   barcode_widget: ^2.0.4  
   firebase_core: ^2.25.5
   firebase_auth: ^4.17.6
+  font_awesome_flutter: ^10.7.0
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
