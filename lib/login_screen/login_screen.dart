@@ -1,9 +1,13 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/controller/auth_controller.dart';
 import 'package:flutter_application_14/login_screen/signup.dart';
-import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 
 late bool _passwordVisible;
 
@@ -19,11 +23,20 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _foemKey = GlobalKey<FormState>();
 
+  final _authController = AuthController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _passwordVisible = true;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _authController.emailController.dispose();
+    _authController.passController.dispose();
+    super.dispose();
   }
 
   @override
@@ -85,10 +98,89 @@ class _LoginScreenState extends State<LoginScreen> {
                           BuildPasswordField(),
                           sizedBox,
                           DefaultButton(
-                            onPress: () {
+                            onPress: () async {
+                              // print("عادني فوق");
+
                               if (_foemKey.currentState!.validate()) {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    HomeScreen.routeName, (route) => false);
+                                // print("دخلت بالاف الاولى");
+
+                                try {
+                                  final credential = await FirebaseAuth.instance
+                                      .signInWithEmailAndPassword(
+                                          email: _authController
+                                              .emailController.text,
+                                          password: _authController
+                                              .passController.text);
+                                  // print("نعم انت على صح");
+                                  if (credential.user!.emailVerified) {
+                                    Get.offAllNamed("HomeScreen");
+                                  } else {
+                                    FirebaseAuth.instance.currentUser!
+                                        .sendEmailVerification();
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'العنوان',
+                                      desc:
+                                          'الرجاء التوجه الى بريدك الالكتروني والضغط على رابط التحقق من البريد حتى يتم تفعيل حسابك  ',
+                                    ).show();
+                                  }
+                                } on FirebaseAuthException catch (e) {
+                                  if (e.code == 'user-not-found') {
+                                    // print('No user found for that email.');
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'الخطا',
+                                      desc: 'لا يوجد مستخدم بهذا البريد',
+                                    ).show();
+                                  } else if (e.code == 'wrong-password') {
+                                    print(
+                                        'Wrong password provided for that user.');
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'الخطا',
+                                      desc: 'كلمة المرور خاطئة',
+                                    ).show();
+                                  } else if (e.code == 'invalid-credential') {
+                                    //لو الايميل خاطئ
+                                    print(
+                                        'invalid-credential provided for that user.');
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'الخطا',
+                                      desc: 'لا يوجد مستخدم بهذا البريد',
+                                    ).show();
+                                  } else if (e.message != null &&
+                                      e.message!.contains("password")) {
+                                    print(
+                                        "Wrong password provided for that user.");
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'الخطا',
+                                      desc: 'كلمة المرور خاطئة',
+                                    ).show();
+                                  } else {
+                                    print("email not found");
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'الخطا',
+                                      desc: e.message,
+                                    ).show();
+                                  }
+                                }
+                              } else {
+                                print("not valide");
                               }
                             },
                             title: "تسجيل الدخول",
@@ -113,16 +205,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
+                                    // _buildSocialMediaBtn(
+                                    //   color: const Color.fromARGB(
+                                    //       255, 59, 89, 152),
+                                    //   icon: FontAwesomeIcons.facebook,
+                                    // ),
                                     _buildSocialMediaBtn(
-                                      color: const Color.fromARGB(
-                                          255, 59, 89, 152),
-                                      icon: FontAwesomeIcons.facebook,
-                                    ),
-                                    _buildSocialMediaBtn(
-                                      color: const Color.fromARGB(
-                                          255, 219, 68, 55),
-                                      icon: FontAwesomeIcons.google,
-                                    ),
+                                        color: const Color.fromARGB(
+                                            255, 219, 68, 55),
+                                        icon: FontAwesomeIcons.google,
+                                        onpress: () {
+                                          _authController.signInWithGoogle();
+                                        }),
                                   ],
                                 ),
                               ),
@@ -176,6 +270,7 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: _passwordVisible,
       textAlign: TextAlign.start,
       keyboardType: TextInputType.visiblePassword,
+      controller: _authController.passController,
       style: const TextStyle(
         color: kTextBlackColor,
         fontSize: 17.0,
@@ -208,6 +303,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       textAlign: TextAlign.start,
       keyboardType: TextInputType.emailAddress,
+      controller: _authController.emailController,
       style: const TextStyle(
         color: kTextBlackColor,
         fontSize: 17.0,
@@ -248,11 +344,17 @@ class _LoginScreenState extends State<LoginScreen> {
 //       break;
 //   }
 // }
-Widget _buildSocialMediaBtn({required Color color, required IconData icon}) {
-  return GestureDetector(
-    onTap: () {
-      // _facebookLogin();
-    },
+Widget _buildSocialMediaBtn(
+    {required Color color,
+    required IconData icon,
+    required VoidCallback onpress}) {
+  // return GFButton(
+  //   onPressed: () {},
+  //   text: "Google",
+  //   icon: FaIcon(icon),
+  // );
+  return InkWell(
+    onTap: onpress,
     child: Container(
       width: 80,
       height: 50,

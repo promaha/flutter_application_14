@@ -1,10 +1,13 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/controller/auth_controller.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 late bool _passwordVisible;
 
@@ -27,6 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordVisible = true;
   }
 
+  AuthController auth = AuthController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -81,35 +85,69 @@ class _SignupScreenState extends State<SignupScreen> {
                       key: _foemKey,
                       child: Column(
                         children: [
-                          BuildEmailField(),
+                          BuildUsernameField(auth.usernameController),
                           sizedBox,
-                          BuildPasswordField(),
+                          BuildEmailField(auth.emailController),
                           sizedBox,
-                          BuildConformPasswordField(),
+                          BuildPasswordField(auth.passController),
+                          sizedBox,
+                          BuildConformPasswordField(
+                              auth.passController, auth.confimPassController),
                           sizedBox,
                           DefaultButton(
                             onPress: () async {
+                              // print("عادني فوق");
                               if (_foemKey.currentState!.validate()) {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    HomeScreen.routeName, (route) => false);
-                              }
+                                // print("دخلت بالاف الاولى");
+                                try {
+                                  final credential = await FirebaseAuth.instance
+                                      .createUserWithEmailAndPassword(
+                                    email: auth.emailController.text,
+                                    password: auth.passController.text,
+                                  );
 
-                              //   try {
-                              //     final credential = await FirebaseAuth.instance
-                              //         .createUserWithEmailAndPassword(
-                              //       email: emailAddress,
-                              //       password: password,
-                              //     );
-                              //   } on FirebaseAuthException catch (e) {
-                              //     if (e.code == 'weak-password') {
-                              //       print('The password provided is too weak.');
-                              //     } else if (e.code == 'email-already-in-use') {
-                              //       print(
-                              //           'The account already exists for that email.');
-                              //     }
-                              //   } catch (e) {
-                              //     print(e);
-                              //   }
+                                  if (credential.user!.emailVerified) {
+                                    Get.offAllNamed("HomeScreen");
+                                  } else {
+                                    FirebaseAuth.instance.currentUser!
+                                        .sendEmailVerification();
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'العنوان',
+                                      desc:
+                                          'الرجاء التوجه الى بريدك الالكتروني والضغط على رابط التحقق من البريد حتى يتم تفعيل حسابك  ',
+                                    ).show();
+                                  }
+                                } on FirebaseAuthException catch (e) {
+                                  if (e.code == 'email-already-in-use') {
+                                    print(
+                                        'The account already exists for that email.');
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      animType: AnimType.rightSlide,
+                                      title: 'عنوان الخطا',
+                                      desc: e.message,
+                                    ).show();
+                                    //print(e.message);
+                                  }
+                                } catch (e) {
+                                  // print(" دخلت الاكسبشن الثانية ");
+                                  // print(e);
+                                  AwesomeDialog(
+                                    context: context,
+                                    dialogType: DialogType.info,
+                                    animType: AnimType.rightSlide,
+                                    title: 'الخطا',
+                                    desc:
+                                        "لديك خطأ في انشاء الحساب قم بالتاكد من صحة البيانات",
+                                  ).show();
+                                }
+                              } else {
+                                print("not valid");
+                              }
                             },
                             title: " إنشاء حساب",
                             iconData: Icons.arrow_forward_ios_outlined,
@@ -179,11 +217,12 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   // ignore: non_constant_identifier_names
-  TextFormField BuildPasswordField() {
+  TextFormField BuildPasswordField(TextEditingController controller) {
     return TextFormField(
       obscureText: _passwordVisible,
       textAlign: TextAlign.start,
       keyboardType: TextInputType.visiblePassword,
+      controller: controller,
       style: const TextStyle(
         color: kTextBlackColor,
         fontSize: 17.0,
@@ -211,18 +250,21 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  TextFormField BuildConformPasswordField() {
+  TextFormField BuildConformPasswordField(
+      TextEditingController passwordController,
+      TextEditingController confirmPasswordController) {
     return TextFormField(
       obscureText: _passwordVisible,
       textAlign: TextAlign.start,
       keyboardType: TextInputType.visiblePassword,
+      controller: confirmPasswordController,
       style: const TextStyle(
         color: kTextBlackColor,
         fontSize: 17.0,
         fontWeight: FontWeight.w300,
       ),
       decoration: InputDecoration(
-        labelText: " تأكيد كلمة المرور",
+        labelText: "تأكيد كلمة المرور",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         isDense: true,
         suffixIcon: IconButton(
@@ -237,17 +279,22 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
       validator: (value) {
-        if (value!.length < 5) return "يجب ان تكون اكثر من 5 رموز";
+        if (value!.isEmpty) {
+          return "يرجى تأكيد كلمة المرور";
+        } else if (value != passwordController.text) {
+          return "كلمة المرور غير متطابقة";
+        }
         return null;
       },
     );
   }
 
   // ignore: non_constant_identifier_names
-  TextFormField BuildEmailField() {
+  TextFormField BuildEmailField(TextEditingController controller) {
     return TextFormField(
       textAlign: TextAlign.start,
       keyboardType: TextInputType.emailAddress,
+      controller: controller,
       style: const TextStyle(
         color: kTextBlackColor,
         fontSize: 17.0,
@@ -269,6 +316,44 @@ class _SignupScreenState extends State<SignupScreen> {
       },
     );
   }
+}
+
+TextFormField BuildUsernameField(TextEditingController controller) {
+  return TextFormField(
+    textAlign: TextAlign.start,
+    keyboardType: TextInputType.emailAddress,
+    controller: controller,
+    style: const TextStyle(
+      color: kTextBlackColor,
+      fontSize: 17.0,
+      fontWeight: FontWeight.w300,
+    ),
+    decoration: const InputDecoration(
+      labelText: "اسم المستخدم",
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      isDense: true,
+    ),
+    validator: (username) {
+      // Username must be between 4 and 20 characters long
+      if (username!.length < 4 || username.length > 20) {
+        return "عدد الاحرف غير مقبولة ";
+      }
+
+      // Username must only contain alphanumeric characters and underscores
+      RegExp usernameRegex = RegExp(r'^[a-zA-Z0-9_]+$');
+      if (!usernameRegex.hasMatch(username)) {
+        return " يجب ان يحتوي على احرف انجليزية او ارقام وبدون مسافات";
+      }
+
+      // Username must not start or end with an underscore
+      if (username.startsWith('_') || username.endsWith('_')) {
+        return "لا يجب ان يبدأ أو ينتهي ب '_'";
+      }
+
+      // If all checks pass, the username is valid
+      return null;
+    },
+  );
 }
 
 // void _facebookLogin() async {

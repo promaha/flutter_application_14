@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/firebase_options.dart';
-import 'package:flutter_application_14/screens/myprofile_screen/edit_profile.dart';
-import 'package:flutter_application_14/screens/myprofile_screen/my_profile.dart';
-import 'package:flutter_application_14/screens/onboard/onboard.dart';
+import 'package:flutter_application_14/login_screen/login_screen.dart';
+import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -117,7 +116,10 @@ class _MyAppState extends State<MyApp> {
           )),
       // initialRoute: OnBoardScreen.routeName,
       //initialRoute: EditProfileScreen.routeName,
-      initialRoute: MyProfileScreen.routeName,
+      initialRoute: (FirebaseAuth.instance.currentUser != null &&
+              FirebaseAuth.instance.currentUser!.emailVerified)
+          ? HomeScreen.routeName
+          : LoginScreen.routeName,
       routes: routs,
     );
   }
