@@ -187,13 +187,39 @@ class _LoginScreenState extends State<LoginScreen> {
                             iconData: Icons.arrow_forward_ios_outlined,
                           ),
                           sizedBox,
-                          const Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Text(
-                              "نسيت كلمة المرور؟",
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                  color: kPrimaryColor, fontSize: 15.0),
+                          InkWell(
+                            onTap: () async {
+                              try {
+                                await FirebaseAuth.instance
+                                    .sendPasswordResetEmail(
+                                        email: _authController
+                                            .emailController.text);
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.success,
+                                  animType: AnimType.rightSlide,
+                                  title: 'الرسالة',
+                                  desc:
+                                      'عليك بالذهاب الى البريد لتغيير كلمة المرور',
+                                ).show();
+                              } on FirebaseAuthException catch (e) {
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.info,
+                                  animType: AnimType.rightSlide,
+                                  title: 'الخطا',
+                                  desc: 'قم بتحديد الايميل في حقل الايميل',
+                                ).show();
+                              }
+                            },
+                            child: const Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "نسيت كلمة المرور؟",
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    color: kPrimaryColor, fontSize: 15.0),
+                              ),
                             ),
                           ),
                           sizedBox,

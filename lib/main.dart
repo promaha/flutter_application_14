@@ -116,10 +116,15 @@ class _MyAppState extends State<MyApp> {
           )),
       // initialRoute: OnBoardScreen.routeName,
       //initialRoute: EditProfileScreen.routeName,
+
       initialRoute: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
           ? HomeScreen.routeName
           : LoginScreen.routeName,
+
+      // initialRoute: (FirebaseAuth.instance.currentUser == null)
+      //     ? LoginScreen.routeName
+      //     : HomeScreen.routeName,
       routes: routs,
     );
   }

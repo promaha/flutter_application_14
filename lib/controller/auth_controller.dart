@@ -20,6 +20,9 @@ class AuthController extends StatelessWidget {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
+    if (googleUser == null) {
+      return;
+    }
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
@@ -32,6 +35,7 @@ class AuthController extends StatelessWidget {
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
+
     Get.offAllNamed("HomeScreen");
   }
 

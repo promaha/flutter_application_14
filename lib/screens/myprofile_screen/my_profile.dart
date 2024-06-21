@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
@@ -8,7 +7,7 @@ import 'package:flutter_application_14/screens/myprofile_screen/contact_screen.d
 import 'package:flutter_application_14/screens/myprofile_screen/edit_profile.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class MyProfileScreen extends StatelessWidget {
   static String routeName = 'MyProfileScreen';
@@ -24,8 +23,23 @@ class MyProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                Get.offAllNamed("LoginScreen");
+                // print("out the try");
+                // GoogleSignIn googleSignIn = GoogleSignIn();
+                // googleSignIn!.disconnect();
+
+                // await FirebaseAuth.instance.signOut();
+                // Get.offAllNamed("LoginScreen");
+                try {
+                  print("in the try");
+                  GoogleSignIn googleSignIn = GoogleSignIn();
+                  await googleSignIn.disconnect();
+                  await FirebaseAuth.instance.signOut();
+                  Get.offAllNamed("LoginScreen");
+                } catch (e) {
+                  await FirebaseAuth.instance.signOut();
+                  Get.offAllNamed("LoginScreen");
+                  // Handle the exception or display an error message to the user
+                }
               },
               icon: Icon(
                 Icons.exit_to_app,
@@ -33,6 +47,7 @@ class MyProfileScreen extends StatelessWidget {
               )),
           InkWell(
             onTap: () {
+              print("Hiiiiii");
               Navigator.pushNamed(context, ContactScreen.routeName);
             },
             child: Container(
