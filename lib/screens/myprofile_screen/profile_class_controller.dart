@@ -19,6 +19,10 @@ TextFormField BuildGoal(String title, TextEditingController controller) {
       floatingLabelBehavior: FloatingLabelBehavior.always,
       isDense: true,
     ),
+    validator: (value) {
+      if (value!.isEmpty) return "مازال الحقل فارغا ";
+      return null;
+    },
   );
 }
 
@@ -33,37 +37,39 @@ TextFormField BuildName(String title, TextEditingController controller) {
       fontSize: 17.0,
       fontWeight: FontWeight.w300,
     ),
-    onChanged: (value) {
-      //name = value;
-    },
     decoration: InputDecoration(
       labelText: title,
       floatingLabelBehavior: FloatingLabelBehavior.always,
       isDense: true,
     ),
+    validator: (value) {
+      if (value!.isEmpty) return "مازال الحقل فارغا ";
+      return null;
+    },
   );
 }
 
-TextFormField BuildAge(String title) {
-  return TextFormField(
-    obscureText: false,
-    textAlign: TextAlign.center,
-    keyboardType: TextInputType.visiblePassword,
-    style: const TextStyle(
-      color: kTextBlackColor,
-      fontSize: 17.0,
-      fontWeight: FontWeight.w300,
-    ),
-    onChanged: (value) {
-      //age = value;
-    },
-    decoration: InputDecoration(
-      labelText: title,
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      isDense: true,
-    ),
-  );
-}
+// TextFormField BuildAge(String title) {
+//   return TextFormField(
+//     obscureText: false,
+//     textAlign: TextAlign.center,
+//     keyboardType: TextInputType.visiblePassword,
+//     // controller: ,
+//     style: const TextStyle(
+//       color: kTextBlackColor,
+//       fontSize: 17.0,
+//       fontWeight: FontWeight.w300,
+//     ),
+//     onChanged: (value) {
+//       //age = value;
+//     },
+//     decoration: InputDecoration(
+//       labelText: title,
+//       floatingLabelBehavior: FloatingLabelBehavior.always,
+//       isDense: true,
+//     ),
+//   );
+// }
 
 Widget buildTextFieldEmail(TextEditingController controller) {
   return Padding(

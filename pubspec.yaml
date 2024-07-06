@@ -53,6 +53,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   firebase_auth: ^5.1.0
   getwidget: ^4.0.0
+  easy_loading_button: ^0.3.2
 
 dev_dependencies:
   flutter_test:

@@ -14,8 +14,8 @@ import 'package:flutter_application_14/screens/splash_screen/splash_screen.dart'
 
 Map<String, WidgetBuilder> routs = {
   SplashScreen.routeName: (context) => const SplashScreen(),
-  LoginScreen.routeName: (context) => const LoginScreen(),
-  HomeScreen.routeName: (context) => const HomeScreen(),
+  LoginScreen.routeName: (context) => LoginScreen(),
+  HomeScreen.routeName: (context) => HomeScreen(),
   MyProfileScreen.routeName: (context) => MyProfileScreen(),
   ResultScreen.routeName: (context) => const ResultScreen(),
   LessonScreen.routeName: (context) => const LessonScreen(),

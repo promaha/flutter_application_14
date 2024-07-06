@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/controller/profile_controller.dart';
+import 'package:flutter_application_14/model/profile_model.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/my_profile.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/profile_class_controller.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
   static String routeName = 'EditProfileScreen';
 
-  final controller = Get.put(ProfileController(), permanent: true);
+  final controller = ProfileController();
+  final controllerModel = ProfileModel();
+  final _foemKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -91,29 +95,40 @@ class EditProfileScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            BuildName("اسم المستخدم", controller.ename),
-            sizedBox,
-            buildTextFieldEmail(controller.eemail),
-            BuildPasswordField(controller.epassword),
-            sizedBox,
-            BuildGoal("الهدف من الدراسة", controller.egoalOfStudy),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SmallButton(onPress: () {}, title: "إلغاء"),
-                GetBuilder<ProfileController>(
-                    //init: ProfileController(),
-                    builder: (controller) => SmallButton(
-                        onPress: () {
-                          controller.save();
-                          Get.offNamed(MyProfileScreen.routeName);
-                        },
-                        title: "حفظ")),
-              ],
-            )
+            Form(
+                key: _foemKey,
+                child: Column(
+                  children: [
+                    BuildName("اسم المستخدم", controller.ename),
+                    sizedBox,
+                    // buildTextFieldEmail(controller.eemail),
+                    BuildName("العمر", controller.eage),
+                    sizedBox,
+                    BuildGoal("الهدف من الدراسة", controller.egoalOfStudy),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SmallButton(onPress: () {}, title: "إلغاء"),
+                        SmallButton(
+                            onPress: () async {
+                              if (_foemKey.currentState!.validate()) {
+                                await controllerModel.setUser(
+                                  controller.ename.text,
+                                  // controller.epassword,
+                                  controller.eage.text,
+                                  controller.egoalOfStudy.text,
+                                );
+                                Get.offNamed(MyProfileScreen.routeName);
+                              }
+                            },
+                            title: "حفظ"),
+                      ],
+                    )
+                  ],
+                ))
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/controller/auth_controller.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
+import 'package:flutter_application_14/model/profile_model.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _foemKey = GlobalKey<FormState>();
+  final controllerModel = ProfileModel();
 
   @override
   void initState() {
@@ -94,7 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           BuildConformPasswordField(
                               auth.passController, auth.confimPassController),
                           sizedBox,
-                          DefaultButton(
+                          EasyLoadButton(
                             onPress: () async {
                               // print("عادني فوق");
                               if (_foemKey.currentState!.validate()) {
@@ -105,21 +107,24 @@ class _SignupScreenState extends State<SignupScreen> {
                                     email: auth.emailController.text,
                                     password: auth.passController.text,
                                   );
-
-                                  if (credential.user!.emailVerified) {
-                                    Get.offAllNamed("HomeScreen");
-                                  } else {
-                                    FirebaseAuth.instance.currentUser!
-                                        .sendEmailVerification();
-                                    AwesomeDialog(
-                                      context: context,
-                                      dialogType: DialogType.info,
-                                      animType: AnimType.rightSlide,
-                                      title: 'العنوان',
-                                      desc:
-                                          'الرجاء التوجه الى بريدك الالكتروني والضغط على رابط التحقق من البريد حتى يتم تفعيل حسابك  ',
-                                    ).show();
-                                  }
+                                  // if (credential.user!.emailVerified) {
+                                  //   Get.offAllNamed("HomeScreen");
+                                  //   controllerModel.addUser(
+                                  //       "", "", auth.emailController.text, "");
+                                  // } else {
+                                  // FirebaseAuth.instance.currentUser!
+                                  //     .sendEmailVerification();
+                                  // AwesomeDialog(
+                                  //   context: context,
+                                  //   dialogType: DialogType.info,
+                                  //   animType: AnimType.rightSlide,
+                                  //   title: 'العنوان',
+                                  //   desc:
+                                  //       'الرجاء التوجه الى بريدك الالكتروني والضغط على رابط التحقق من البريد حتى يتم تفعيل حسابك  ',
+                                  // ).show();
+                                  Get.offAllNamed("HomeScreen");
+                                  controllerModel.addUser(
+                                      "", "", auth.emailController.text, "");
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'email-already-in-use') {
                                     print(
@@ -150,7 +155,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               }
                             },
                             title: " إنشاء حساب",
-                            iconData: Icons.arrow_forward_ios_outlined,
+                            // iconData: Icons.arrow_forward_ios_outlined,
                           ),
                           sizedBox,
                         ],
@@ -301,7 +306,7 @@ class _SignupScreenState extends State<SignupScreen> {
         fontWeight: FontWeight.w300,
       ),
       decoration: const InputDecoration(
-        labelText: "رقم الهاتف/الايميل",
+        labelText: "البريد الالكتروني",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         isDense: true,
       ),

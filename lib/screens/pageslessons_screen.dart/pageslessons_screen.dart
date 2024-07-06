@@ -149,7 +149,7 @@ class _PagesLessonsScreenState extends State<PagesLessonsScreen> {
                               duration: const Duration(microseconds: 300),
                               curve: Curves.bounceIn);
                         },
-                        text: "ابن",
+                        text: testScreenData.choice1,
                       ),
                       TestButton(
                         onPress: () {
@@ -157,7 +157,7 @@ class _PagesLessonsScreenState extends State<PagesLessonsScreen> {
                               duration: const Duration(microseconds: 300),
                               curve: Curves.bounceIn);
                         },
-                        text: "اخ",
+                        text: testScreenData.choice2,
                       )
                     ],
                   )

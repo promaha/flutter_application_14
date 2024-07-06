@@ -13,14 +13,14 @@ class StudentName extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            "أهلا",
+            "اهلا ",
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!
                 .copyWith(fontWeight: FontWeight.w200, fontSize: 35),
           ),
           Text(
-            "  مها ",
+            studentName,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium!

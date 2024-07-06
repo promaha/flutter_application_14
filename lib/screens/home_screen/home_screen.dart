@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/model/getdata_model.dart';
 import 'package:flutter_application_14/screens/Lessons_screen/lesson_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/widgets/student_data.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/my_profile.dart';
@@ -7,8 +8,10 @@ import 'package:flutter_application_14/screens/result_screen/result_screen.dart'
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
   static String routeName = 'HomeScreen';
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,10 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        StudentName(studentName: 'مها'),
+                        GetStudentName(),
                         kHalfSizedBox,
                         StudentClass(studentClass: "المستوى الأول"),
                         kHalfSizedBox,

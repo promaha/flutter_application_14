@@ -4,7 +4,7 @@ import 'package:flutter_application_14/firebase_options.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/routes.dart';
@@ -115,17 +115,28 @@ class _MyAppState extends State<MyApp> {
             ),
           )),
       // initialRoute: OnBoardScreen.routeName,
-      //initialRoute: EditProfileScreen.routeName,
+      // initialRoute: HomeScreen.routeName,
+      // initialRoute: test,
 
-      initialRoute: (FirebaseAuth.instance.currentUser != null &&
-              FirebaseAuth.instance.currentUser!.emailVerified)
+      // home: Test(),
+// هذا الرئيسي
+      // initialBinding: BindingsBuilder(() {
+      //   Get.put(UserNameController());
+      // }),
+      initialRoute: (FirebaseAuth.instance.currentUser != null)
           ? HomeScreen.routeName
           : LoginScreen.routeName,
+      routes: routs,
+
+      // initialRoute: (FirebaseAuth.instance.currentUser != null &&
+      //         FirebaseAuth.instance.currentUser!.emailVerified)
+      //     ? HomeScreen.routeName
+      //     : LoginScreen.routeName,
+      // routes: routs,
 
       // initialRoute: (FirebaseAuth.instance.currentUser == null)
       //     ? LoginScreen.routeName
       //     : HomeScreen.routeName,
-      routes: routs,
     );
   }
 }
