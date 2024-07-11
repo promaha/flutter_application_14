@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
 import 'package:flutter_application_14/model/getdata_model.dart';
+import 'package:flutter_application_14/model/levels_model.dart';
 import 'package:flutter_application_14/screens/Lessons_screen/lesson_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/widgets/student_data.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/my_profile.dart';
 import 'package:flutter_application_14/screens/result_screen/result_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   static String routeName = 'HomeScreen';
-
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +27,12 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GetStudentName(),
+                        GetStudentInfo(
+                          nameOfVariable: 'name',
+                        ),
                         kHalfSizedBox,
                         StudentClass(studentClass: "المستوى الأول"),
                         kHalfSizedBox,
@@ -69,13 +71,14 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         LevelsCard(
                             onPress: () {
-                              Navigator.pushNamed(
-                                  context, LessonScreen.routeName);
+                              Get.toNamed('MainLevel1', arguments: Level1Data);
                             },
-                            icon: "assets/icons/ask.svg",
+                            icon: "assets/icons/lock.svg",
                             title: "المستوى الاول"),
                         LevelsCard(
-                            onPress: () {},
+                            onPress: () {
+                              Get.toNamed('MainLevel1', arguments: Level2Data);
+                            },
                             icon: "assets/icons/ask.svg",
                             title: "المستوى الثاني"),
                         LevelsCard(
@@ -141,18 +144,18 @@ class LevelsCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            Text(
+              title,
+              textAlign: TextAlign.start,
+              // style: Theme.of(context).textTheme.titleSmall,
+              style: const TextStyle(fontSize: 20.0, color: kTextWhiteColor),
+            ),
             SvgPicture.asset(
               icon,
               height: 40.0,
               width: 40.0,
               color: kOtherColor,
             ),
-            Text(
-              title,
-              textAlign: TextAlign.start,
-              // style: Theme.of(context).textTheme.titleSmall,
-              style: const TextStyle(fontSize: 20.0, color: kTextWhiteColor),
-            )
           ],
         ),
       ),

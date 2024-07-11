@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
 import 'package:flutter_application_14/login_screen/signup.dart';
 import 'package:flutter_application_14/screens/Lessons_screen/lesson_screen.dart';
+import 'package:flutter_application_14/screens/levels/level1/letters.dart';
+import 'package:flutter_application_14/screens/levels/main_level1.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/contact_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
 import 'package:flutter_application_14/screens/myprofile_screen/edit_profile.dart';
@@ -17,7 +19,7 @@ Map<String, WidgetBuilder> routs = {
   LoginScreen.routeName: (context) => LoginScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
   MyProfileScreen.routeName: (context) => MyProfileScreen(),
-  ResultScreen.routeName: (context) => const ResultScreen(),
+  ResultScreen.routeName: (context) => ResultScreen(),
   LessonScreen.routeName: (context) => const LessonScreen(),
   ContactScreen.routeName: (context) => const ContactScreen(),
   OnBoardScreen.routeName: (context) => const OnBoardScreen(),
@@ -25,4 +27,6 @@ Map<String, WidgetBuilder> routs = {
   EditProfileScreen.routeName: (context) => EditProfileScreen(),
   SignupScreen.routeName: (context) => const SignupScreen(),
   PagesLessonsScreen.routeName: (context) => const PagesLessonsScreen(),
+  MainLevel1.routeName: (context) => MainLevel1(),
+  LettersScreen.routeName: (context) => LettersScreen(),
 };

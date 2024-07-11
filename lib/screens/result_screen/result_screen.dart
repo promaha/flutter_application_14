@@ -1,170 +1,105 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/controller/result_controller.dart';
+import 'package:flutter_application_14/model/getdata_model.dart';
 import 'package:flutter_application_14/screens/result_screen/component/result_component.dart';
-import 'package:flutter_application_14/screens/result_screen/data/result_data.dart';
-import 'package:collection/collection.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  ResultScreen({super.key});
   static String routeName = "ResultScreen";
+  ResultController resultController = ResultController();
+
   @override
   Widget build(BuildContext context) {
-    int oMarks = result.map((e) => e.obtaindMarks).sum.toInt();
-    int tMarks = result.map((e) => e.totalMarks).sum.toInt();
-
+    // int oMarks = result.map((e) => e.obtaindMarks).sum.toInt();
+    // int tMarks = result.map((e) => e.totalMarks).sum.toInt();
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('infoUser');
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "النتيجة",
-          style: TextStyle(color: kTextWhiteColor),
+        appBar: AppBar(
+          title: const Text(
+            "النتيجة",
+            style: TextStyle(color: kTextWhiteColor),
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Container(
-            height: 200,
-            margin: const EdgeInsets.all(30),
-            child: CustomPaint(
-              foregroundPainter: CircularPainter(
-                  backgroundColor: kPrimaryColor,
-                  lineColor: kOtherColor,
-                  width: 15),
-              child: Center(
-                child: Text(
-                  oMarks.toString() + "\n / \n" + tMarks.toString(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: kTextWhiteColor,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-          Text(
-            "ممتاز",
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
-          ),
-          Text(
-            "مها",
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
-          ),
-          sizedBox,
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: kOtherColor,
-              ),
-              child: ListView.builder(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                itemCount: result.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: kDefaultPadding),
-                    padding: const EdgeInsets.all(kDefaultPadding / 2),
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        borderRadius: BorderRadius.circular(kDefaultPadding),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: kTextLightColor,
-                            blurRadius: 2.0,
-                          )
-                        ]),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              result[index].subjectName,
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color:
-                                        kTextWhiteColor, // Replace with the desired color
-                                  ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${result[index].obtaindMarks} / ${result[index].totalMarks}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color:
-                                            kTextWhiteColor, // Replace with the desired color
-                                      ),
-                                ),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      width:
-                                          result[index].totalMarks.toDouble(),
-                                      height: 25.0,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[700],
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft:
-                                              Radius.circular(kDefaultPadding),
-                                          bottomRight:
-                                              Radius.circular(kDefaultPadding),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width:
-                                          result[index].obtaindMarks.toDouble(),
-                                      height: 25.0,
-                                      decoration: BoxDecoration(
-                                        color: result[index].grade == 'D'
-                                            ? kErrorBorderColor
-                                            : kOtherColor,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft:
-                                              Radius.circular(kDefaultPadding),
-                                          bottomRight:
-                                              Radius.circular(kDefaultPadding),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  result[index].grade,
-                                  textAlign: TextAlign.start,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: kTextWhiteColor,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ],
+        body: FutureBuilder<QuerySnapshot>(
+            future: users
+                .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                .get(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return const Center(child: Text("Something went wrong"));
+              }
+
+              if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
+                return const Center(child: Text(" "));
+              }
+
+              if (snapshot.connectionState == ConnectionState.done) {
+                Map<String, dynamic> data =
+                    snapshot.data!.docs.first.data() as Map<String, dynamic>;
+                return Column(
+                  children: [
+                    Container(
+                      height: 200,
+                      margin: const EdgeInsets.all(30),
+                      child: CustomPaint(
+                        foregroundPainter: CircularPainter(
+                            backgroundColor: kPrimaryColor,
+                            lineColor: kOtherColor,
+                            width: 15),
+                        child: Center(
+                          child: Text(
+                            // oMarks.toString() + "\n / \n" + tMarks.toString()
+                            resultController.sumMark(data).toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: kTextWhiteColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
                     ),
-                  );
-                },
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+                    Appreciation(
+                      obtaindMarks: resultController.sumMark(data),
+                      totalMarks: 100,
+                    ),
+                    const GetStudentInfo(
+                      nameOfVariable: 'name',
+                    ),
+                    sizedBox,
+                    Expanded(
+                      child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: kOtherColor,
+                          ),
+                          child: ListView(
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.all(kDefaultPadding),
+                            children: [
+                              Column(
+                                children: [
+                                  ResultLevels(
+                                    levelName: 'المستوى الاول',
+                                    obtaindMarks: (data['level1'] / 100) * 100,
+                                    totalMarks: 100,
+                                    grade: resultController
+                                        .getGrade((data['level1'] / 100) * 100),
+                                  )
+                                ],
+                              )
+                            ],
+                          )),
+                    ),
+                  ],
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }));
   }
 }

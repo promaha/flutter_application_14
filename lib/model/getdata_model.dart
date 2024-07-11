@@ -51,8 +51,9 @@ class GetUserInfo extends StatelessWidget {
   }
 }
 
-class GetStudentName extends StatelessWidget {
-  const GetStudentName({super.key});
+class GetStudentInfo extends StatelessWidget {
+  const GetStudentInfo({super.key, required this.nameOfVariable});
+  final String nameOfVariable;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class GetStudentName extends StatelessWidget {
             Map<String, dynamic> data =
                 snapshot.data!.docs.first.data() as Map<String, dynamic>;
             return StudentName(
-              studentName: data['name'],
+              studentName: data[nameOfVariable],
             );
           }
 

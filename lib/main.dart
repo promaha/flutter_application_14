@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_14/firebase_options.dart';
 import 'package:flutter_application_14/login_screen/login_screen.dart';
 import 'package:flutter_application_14/screens/home_screen/home_screen.dart';
+import 'package:flutter_application_14/screens/levels/main_level1.dart';
+import 'package:flutter_application_14/screens/result_screen/result_screen.dart';
+import 'package:flutter_application_14/test.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -118,7 +121,10 @@ class _MyAppState extends State<MyApp> {
       // initialRoute: HomeScreen.routeName,
       // initialRoute: test,
 
+      // home: ResultScreen(),
       // home: Test(),
+      // home: MainLevel1(),
+
 // هذا الرئيسي
       // initialBinding: BindingsBuilder(() {
       //   Get.put(UserNameController());

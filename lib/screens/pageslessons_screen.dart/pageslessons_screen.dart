@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_14/components/custom_buttons.dart';
 import 'package:flutter_application_14/constants.dart';
+import 'package:flutter_application_14/model/profile_model.dart';
 import 'package:flutter_application_14/screens/pageslessons_screen.dart/pagelesson_model.dart';
 import 'package:flutter_application_14/screens/pageslessons_screen.dart/pagelesson_test.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class PagesLessonsScreen extends StatefulWidget {
 }
 
 class _PagesLessonsScreenState extends State<PagesLessonsScreen> {
-  int trans = -1, trans2 = -1;
+  int trans = -1, trans2 = -1, totalOfLevel = 0;
   late PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -76,7 +77,9 @@ class _PagesLessonsScreenState extends State<PagesLessonsScreen> {
                   ),
                   MoveButton(
                     onPress: () {
-                      Get.toNamed("LessonScreen");
+                      ProfileModel profileModel = ProfileModel();
+                      profileModel.setLevel(totalOfLevel);
+                      Get.back();
                     },
                     icon: Icons.arrow_circle_left,
                   ),
@@ -145,6 +148,7 @@ class _PagesLessonsScreenState extends State<PagesLessonsScreen> {
                     children: [
                       TestButton(
                         onPress: () {
+                          totalOfLevel += testScreenData.choiceOneCorrectt;
                           _pageController.nextPage(
                               duration: const Duration(microseconds: 300),
                               curve: Curves.bounceIn);
@@ -153,6 +157,7 @@ class _PagesLessonsScreenState extends State<PagesLessonsScreen> {
                       ),
                       TestButton(
                         onPress: () {
+                          totalOfLevel += testScreenData.choiceTwoCorrectt;
                           _pageController.nextPage(
                               duration: const Duration(microseconds: 300),
                               curve: Curves.bounceIn);

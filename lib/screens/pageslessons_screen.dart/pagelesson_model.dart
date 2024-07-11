@@ -11,7 +11,7 @@ class PageLesson {
 List<PageLesson> screens = <PageLesson>[
   PageLesson(
     img: "assets/images/ابن 00_00_00-00_00_30.gif",
-    text: "1",
+    text: "ابن",
   ),
   PageLesson(
     img: "assets/images/ابن 00_00_00-00_00_30.gif",
@@ -22,19 +22,19 @@ List<PageLesson> screens = <PageLesson>[
     text: "3",
   ),
   PageLesson(
-    img: "assets/images/skip1.jpeg",
+    img: "assets/images/ابن 00_00_00-00_00_30.gif",
     text: "4",
   ),
   PageLesson(
-    img: "assets/images/skip1.jpeg",
+    img: "assets/images/ابن 00_00_00-00_00_30.gif",
     text: "5",
   ),
   PageLesson(
-    img: "assets/images/skip1.jpeg",
+    img: "assets/images/ابن 00_00_00-00_00_30.gif",
     text: "6",
   ),
   PageLesson(
-    img: "assets/images/skip1.jpeg",
+    img: "assets/images/ابن 00_00_00-00_00_30.gif",
     text: "7",
   ),
 ];

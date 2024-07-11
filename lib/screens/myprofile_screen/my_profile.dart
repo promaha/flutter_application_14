@@ -29,7 +29,6 @@ class MyProfileScreen extends StatelessWidget {
                 // await FirebaseAuth.instance.signOut();
                 // Get.offAllNamed("LoginScreen");
                 try {
-                  print("in the try");
                   GoogleSignIn googleSignIn = GoogleSignIn();
                   await googleSignIn.disconnect();
                   await FirebaseAuth.instance.signOut();
@@ -70,7 +69,9 @@ class MyProfileScreen extends StatelessWidget {
             Icons.arrow_back,
             color: kOtherColor,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: Container(
@@ -102,7 +103,9 @@ class MyProfileScreen extends StatelessWidget {
                     kWidthSizedBox,
                     Column(
                       children: [
-                        GetStudentName(),
+                        const GetStudentInfo(
+                          nameOfVariable: 'name',
+                        ),
                         Text(
                           "المستوى الاول",
                           style: Theme.of(context)

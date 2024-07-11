@@ -124,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   // ).show();
                                   Get.offAllNamed("HomeScreen");
                                   controllerModel.addUser(
-                                      "", "", auth.emailController.text, "");
+                                      "", "", auth.emailController.text, "", 0);
                                 } on FirebaseAuthException catch (e) {
                                   if (e.code == 'email-already-in-use') {
                                     print(

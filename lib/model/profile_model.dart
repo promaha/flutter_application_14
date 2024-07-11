@@ -29,7 +29,7 @@ class ProfileModel {
             'goal': egoalOfStudy,
           }, SetOptions(merge: true))
           .then(
-            (value) => Get.offNamed(MyProfileScreen.routeName),
+            (value) => print("hi"),
           )
           .catchError((error) {
             Get.snackbar("", "$error");
@@ -38,12 +38,32 @@ class ProfileModel {
     }
   }
 
-  Future<void> addUser(
-    String ename,
-    String eage,
-    String email,
-    String egoalOfStudy,
-  ) {
+  Future<void> setLevel(int level1) async {
+    // Call the user's CollectionReference to add a new user
+    CollectionReference infoUser =
+        FirebaseFirestore.instance.collection('infoUser');
+    Query query =
+        infoUser.where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
+    QuerySnapshot snapshot = await query.get();
+    if (snapshot.docs.isNotEmpty) {
+      final DocumentSnapshot document = snapshot.docs.first;
+      infoUser
+          .doc(document.id)
+          .set({
+            'level1': level1,
+          }, SetOptions(merge: true))
+          .then(
+            (value) => print("hi"),
+          )
+          .catchError((error) {
+            Get.snackbar("", "$error");
+            return Future.error(error);
+          });
+    }
+  }
+
+  Future<void> addUser(String ename, String eage, String email,
+      String egoalOfStudy, int level1) {
     // Call the user's CollectionReference to add a new user
     CollectionReference infoUser =
         FirebaseFirestore.instance.collection('infoUser');
@@ -54,9 +74,10 @@ class ProfileModel {
           'goal': egoalOfStudy, // Stokes and Sons
           'email': email, // Stokes and Sons
           'id': FirebaseAuth.instance.currentUser!.uid,
+          'level1': level1,
         })
         .then(
-          (value) => Get.offNamed(MyProfileScreen.routeName),
+          (value) => print("hi"),
         )
         .catchError((error) {
           Get.snackbar("", "$error");
